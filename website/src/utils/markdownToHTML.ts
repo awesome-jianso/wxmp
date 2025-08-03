@@ -5,7 +5,10 @@ import { Element } from 'hast';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
+import remarkMath from 'remark-math';
 import rehypePrism from 'rehype-prism-plus';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css'; // Ensure KaTeX styles are included
 import rehypeRaw from 'rehype-raw';
 import rehypeAttrs from 'rehype-attr';
 import rehypeIgnore from 'rehype-ignore';
@@ -32,8 +35,10 @@ export function markdownToHTML(md: string, css: string, opts: MarkdownToHTMLOpti
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
+    .use(rehypeKatex)
     .use(rehypePrism, {
       ignoreMissing: true,
     })
